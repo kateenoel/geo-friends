@@ -1,9 +1,95 @@
 import math
+from dataclasses import dataclass
 import numpy as np
 
+
 # collect user input
-def collect_information():
-    num_sites = int(input("Enter number of sites: "))
+# determine number of sites
+def get_num_sites():
+    while True:
+        try:
+            num_sites = int(input("Enter the number of sites: "))
+            break
+
+        except ValueError:
+            print("Try again, that wasn't a number :)")
+
+    print("Thank you! You are interested in finding the geographic midpoint of ", num_sites, " sites")
+    return num_sites
+
+
+# determine site type
+def get_site_type():
+    print("1. Zip code")
+    print("2. Coordinates")
+    while True:
+        try:
+            site_type = int(input("Enter the number associated with your site data type: "))
+            break
+
+        except ValueError:
+            print("Try again, that wasn't a number :)")
+
+    print("Thanks! You are entering sites in the form of ", site_type)
+    return site_type
+
+
+# determine coordinate type (if applicable)
+def get_coord_type():
+    print("1. Degrees")
+    print("2. Radians")
+    while True:
+        try:
+            coord_type = int(input("Enter the number associated with your coordinate type: "))
+            break
+
+        except ValueError:
+            print("Try again, that wasn't a number :)")
+
+    print("Thanks! Your coordinates are in the unit of ", coord_type)
+    return coord_type
+
+
+# define coordinate data classes
+@dataclass
+class DegreeCoordinates:
+    latitude: float
+    longitude: float
+
+
+@dataclass
+class RadianCoordinates:
+    phi: float
+    theta: float
+
+
+# collect site data
+def get_site_data(num_sites, site_type, coord_type):
+    #  need to add support for zip code inputs
+    if site_type == 2:  # site_type = coordinates
+        for i in range(num_sites-1):
+            while True:
+                try:
+                    lat = int(input("Enter the latitude of a site: "))
+                    lon = int(input("Now enter its longitude: "))
+                    if coord_type == 1:  # coord_type = degrees
+                        site = DegreeCoordinates(latitude=lat, longitude=lon)
+                    else:
+                        site = RadianCoordinates(phi=lat, theta=lon)
+                    break
+
+                except ValueError:
+                    print("Try again, that wasn't a number :)")
+    # LEFT OFF HERE
+    print("ENTER MESSAGE")
+    return site
+
+
+
+
+
+
+
 
 
 
